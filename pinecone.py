@@ -20,6 +20,7 @@ from src.utils.apiserp import scrap_results
 
 from src.config import Config
 
+
 pinecone.init(
     api_key=Config.PINECONE_API_KEY,
     environment=Config.PINECONE_REGION,
