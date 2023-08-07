@@ -1,0 +1,34 @@
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - 4000:4000
+    command: flask run --host=0.0.0.0 --port=4000 --reload --debugger
+    environment:
+      - broker=redis://redis:6379/0
+      - backend=redis://redis:6379/0
+    networks:
+      - task
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    networks:
+      - task
+
+  celery:
+    build: .
+    command: celery -A app.celery worker -l info
+    environment:
+      - broker=redis://redis:6379/0
+      - backend=redis://redis:6379/0
+    depends_on:
+      - redis
+      - web
+    networks:
+      - task
+
+networks:
+  task:
