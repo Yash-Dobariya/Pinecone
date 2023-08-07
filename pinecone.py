@@ -165,7 +165,6 @@ you then greet back in formal way. \n\nText:\n{text}"
         return prompt, text
 
     def get_answer(self, question: str, include_google_data: bool, name_space: str):
-
         serpapi_response = scrap_results(question)
         template, docs_data = self.construct_prompt(question, name_space)
 
@@ -197,11 +196,9 @@ Bot:
             "prompt": template,
         }
 
-
     def upload_to_pinecone(all_contents, name_space):
         pinecone_connector = PineconeConnector(dimension=DIMENSIONS["openai"])
         pinecone_connector.create_embeddings(all_contents, name_space=name_space)
-
 
     def delete_name_space(name_space):
         # Initialize the index with the provided index_name or the default index_name
